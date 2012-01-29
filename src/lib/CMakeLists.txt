@@ -1,8 +1,17 @@
 # @file /src/lib/CMakeLists.txt
 # @brief CMake file for the /src/lib directory
 # @author Joshua Gwinn (jdgbolt@gmail.com)
+# @version
 # @date 2012-01-28
+
+# Include subdirectories in the tree for build process
+ADD_SUBDIRECTORY(core)
+ADD_SUBDIRECTORY(display)
+ADD_SUBDIRECTORY(sound)
 
 # Set source variable to build main.cc in /src/bin
 SET(LIB_SOURCES
+   ${CORE_SOURCES}
+   ${DISPLAY_SOURCES}
+   ${SOUND_SOURCES}
    PARENT_SCOPE)

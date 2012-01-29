@@ -1,6 +1,7 @@
 # @file /src/bin/CMakeLists.txt
 # @brief CMake file for the /src/bin directory
 # @author Joshua Gwinn (jdgbolt@gmail.com)
+# @version
 # @date 2012-01-28
 
 # Add libraries to link the main impact executable

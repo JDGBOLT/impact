@@ -1,6 +1,7 @@
 # @file /src/CMakeLists.txt
 # @brief CMake file for the src dirctory
 # @author Joshua Gwinn (jdgbolt@gmail.com)
+# @version
 # @date 2012-01-28
 
 # Set placeholder variable to pass to the /src/bin/CMakeLists.txt file

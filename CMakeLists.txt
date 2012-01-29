@@ -2,6 +2,7 @@
 # brief Primary CMake build system file, containing project settings and
 # dependencies
 # @author Joshua Gwinn (jdgbolt@gmail.com)
+# @version
 # @date 2011-01-28
 
 # Base Project Properties
