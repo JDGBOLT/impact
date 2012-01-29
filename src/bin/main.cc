@@ -19,7 +19,7 @@ main(int argc, const char *argv[])
    Impact impact;
    Timer time;
    init.init(&screen);
-   while (impact.input_update() != RETURN_QUIT)
+   while (impact.input_update() == RETURN_NORMAL)
      {
         impact.logic_process();
         impact.display_render(screen);
