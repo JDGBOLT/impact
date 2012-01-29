@@ -9,6 +9,7 @@
 #include "impact.hh"
 #include "core/impact_init.hh"
 #include "core/impact_game.hh"
+#include "core/timer.hh"
 
 int
 main(int argc, const char *argv[])
@@ -16,6 +17,7 @@ main(int argc, const char *argv[])
    SDL_Surface *screen = NULL;
    ImpactInit init;
    Impact impact;
+   Timer time;
    init.init(&screen);
    while (impact.input_update() != RETURN_QUIT)
      {
@@ -23,6 +25,8 @@ main(int argc, const char *argv[])
         impact.display_render(screen);
         impact.sound_play();
         impact.state_check();
+        if (time.time_ticks() < (1000 / frameRATE) )
+          SDL_Delay( (1000 / frameRATE) - time.time_ticks());
      }
    init.cleanup();
    return 0;
