@@ -9,6 +9,7 @@ SET(CURDIR ${CMAKE_CURRENT_SOURCE_DIR})
 SET(CORE_SOURCES
    "${CURDIR}/impact_init.cc"
    "${CURDIR}/impact_game.cc"
+   "${CURDIR}/impact_state_play.cc"
    "${CURDIR}/timer.cc"
    PARENT_SCOPE)
 
