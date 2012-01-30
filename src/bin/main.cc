@@ -23,6 +23,7 @@ main(int argc, const char *argv[])
    impact.state_push((ImpactState *)(new ImpactPlay));
    while (impact.input_update() == RETURN_NORMAL)
      {
+        time.time_start();
         impact.logic_process();
         impact.display_render(screen);
         impact.sound_play();
