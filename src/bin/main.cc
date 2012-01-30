@@ -9,6 +9,7 @@
 #include "impact.hh"
 #include "core/impact_init.hh"
 #include "core/impact_game.hh"
+#include "core/impact_state_play.hh"
 #include "core/timer.hh"
 
 int
@@ -19,6 +20,7 @@ main(int argc, const char *argv[])
    Impact impact;
    Timer time;
    init.init(&screen);
+   impact.state_push((ImpactState *)(new ImpactPlay));
    while (impact.input_update() == RETURN_NORMAL)
      {
         impact.logic_process();
