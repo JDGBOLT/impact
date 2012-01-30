@@ -8,6 +8,7 @@
 SET(CURDIR ${CMAKE_CURRENT_SOURCE_DIR})
 SET(DISPLAY_SOURCES
    "${CURDIR}/display_init.cc"
+   "${CURDIR}/display_state.cc"
    PARENT_SCOPE)
 
 
