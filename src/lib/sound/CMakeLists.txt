@@ -8,4 +8,5 @@
 SET(CURDIR ${CMAKE_CURRENT_SOURCE_DIR})
 SET(SOUND_SOURCES
    "${CURDIR}/sound_init.cc"
+   "${CURDIR}/sound_state_play.cc"
    PARENT_SCOPE)
