@@ -19,6 +19,7 @@ const int screenWIDTH = 800;
 const int screenHEIGHT = 480;
 const int screenBPP = 8;
 const int frameRATE = 60;
+const int logicFRAMErate = 120;
 const int colorkeyR = 0xFF;
 const int colorkeyG = 0;
 const int colorkeyB = 0xFF;

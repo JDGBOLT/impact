@@ -18,18 +18,22 @@ main(int argc, const char *argv[])
    SDL_Surface *screen = NULL;
    ImpactInit init;
    Impact impact;
-   Timer time;
+   Timer time, renderTime;
    init.init(&screen);
    impact.state_push((ImpactState *)(new ImpactPlay));
    while (impact.input_update() == RETURN_NORMAL)
      {
         time.time_start();
         impact.logic_process();
-        impact.display_render(screen);
-        impact.sound_play();
-        impact.state_check();
-        if (time.time_ticks() < (1000 / frameRATE) )
-          SDL_Delay( (1000 / frameRATE) - time.time_ticks());
+        if (!renderTime.time_started() || renderTime.time_ticks() > (1000 / frameRATE))
+          {
+             renderTime.time_start();
+             impact.display_render(screen);
+             impact.sound_play();
+             impact.state_check();
+          }
+        if (time.time_ticks() < (1000 / logicFRAMErate) )
+          SDL_Delay( (1000 / logicFRAMErate) - time.time_ticks());
      }
    init.cleanup();
    return 0;
