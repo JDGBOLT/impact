@@ -14,9 +14,17 @@ ErrorReturn
 ImpactInit::sound_init()
 {
    if (SDL_InitSubSystem(SDL_INIT_AUDIO) < 0)
-     return RETURN_QUIT;
+     {
+        Log_CRIT("Could not initialize audio subsystem:");
+        Log_CRIT(SDL_GetError());
+        return RETURN_QUIT;
+     }
    if (Mix_OpenAudio(soundFREQUENCY, soundFORMAT, soundCHANNELS, soundCHUNKsize) < 0)
-     return RETURN_QUIT;
+     {
+        Log_CRIT("Could not open audio device:");
+        Log_CRIT(SDL_GetError());
+        return RETURN_QUIT;
+     }
    return RETURN_NORMAL;
 }
 

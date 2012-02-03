@@ -13,11 +13,21 @@ ErrorReturn
 ImpactInit::init(SDL_Surface **screen)
 {
    if (SDL_Init(SDL_INIT_TIMER) < 0)
-     return RETURN_QUIT;
+     {
+        Log_CRIT("Could not initialize SDL_TIMER:");
+        Log_CRIT(SDL_GetError());
+        return RETURN_QUIT;
+     }
    if (display_init(screen) != RETURN_NORMAL)
-     return RETURN_QUIT;
+     {
+        Log_CRIT("Could not initialize the display!!!");
+        return RETURN_QUIT;
+     }
    if (sound_init() != RETURN_NORMAL)
-     return RETURN_QUIT;
+     {
+        Log_CRIT("Could not initialize the sound system!!!");
+        return RETURN_QUIT;
+     }
    return RETURN_NORMAL;
 }
 

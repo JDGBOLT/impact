@@ -13,10 +13,18 @@ ErrorReturn
 ImpactInit::display_init(SDL_Surface **screen)
 {
    if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0)
-     return RETURN_QUIT;
+     {
+        Log_CRIT("Could not initialize SDL video subsystem:");
+        Log_CRIT(SDL_GetError());
+        return RETURN_QUIT;
+     }
    *screen = SDL_SetVideoMode(screenWIDTH, screenHEIGHT, screenBPP, screenFLAGS);
    if (!screen)
-     return RETURN_QUIT;
+     {
+        Log_CRIT("Could not open display:");
+        Log_CRIT(SDL_GetError());
+        return RETURN_QUIT;
+     }
    if (screenBPP == 8)
      {
         SDL_Color colors[256];

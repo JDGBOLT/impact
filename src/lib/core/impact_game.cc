@@ -9,7 +9,6 @@
  */
 
 #include "impact_game.hh"
-#include <iostream>
 
 ErrorReturn
 Impact::state_change(ImpactState *state)
@@ -26,7 +25,10 @@ Impact::state_change(ImpactState *state)
         states.back()->init();
      }
    else
-     return RETURN_ERROR;
+     {
+        Log_WARN("Could not change state.");
+        return RETURN_ERROR;
+     }
    return RETURN_NORMAL;
 }
 
@@ -41,7 +43,10 @@ Impact::state_pop()
         states.back()->run_unpause();
      }
    else
-     return RETURN_ERROR;
+     {
+        Log_WARN("Could not pop state.");
+        return RETURN_ERROR;
+     }
    return RETURN_NORMAL;
 }
 
@@ -111,13 +116,13 @@ Impact::display_render(SDL_Surface *screen)
           }
         else
           {
-             std::cout << "States is empty!!" << std::endl;
+             Log_ERR("Could not render to screen, states empty!");
              return RETURN_NORMAL;
           }
      }
    else
      {
-        std::cout << "Could not open screen!" << std::endl;
+        Log_ERR("Could not open screen!");
         return RETURN_ERROR;
      }
    return RETURN_NORMAL;
@@ -150,6 +155,8 @@ Impact::state_check()
               return state_set(states.back()->state_change());
            case STATE_NULL:
               return RETURN_NORMAL;
+           default:
+              Log_WARN("State check recieved invalid return.");
           }
      }
    return RETURN_ERROR;
