@@ -10,6 +10,7 @@ SET(LIB_SOURCES)
 # Set include directories
 INCLUDE_DIRECTORIES(
    "${CMAKE_CURRENT_SOURCE_DIR}/lib"
+   "${CMAKE_CURRENT_SOURCE_DIR}/lib/libs"
    "${CMAKE_CURRENT_SOURCE_DIR}/lib/include"
 )
 

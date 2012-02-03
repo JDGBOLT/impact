@@ -10,6 +10,7 @@ ADD_SUBDIRECTORY(display)
 ADD_SUBDIRECTORY(sound)
 ADD_SUBDIRECTORY(input)
 ADD_SUBDIRECTORY(logic)
+ADD_SUBDIRECTORY(libs)
 
 # Set source variable to build main.cc in /src/bin
 SET(LIB_SOURCES
@@ -18,4 +19,5 @@ SET(LIB_SOURCES
    ${SOUND_SOURCES}
    ${INPUT_SOURCES}
    ${LOGIC_SOURCES}
+   ${LIBS_SOURCES}
    PARENT_SCOPE)
