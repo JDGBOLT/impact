@@ -100,18 +100,18 @@ ObjectHeading
 };
 
 // Handle debug logging
-#define Log_OUT(STREAM, LEVEL, MESSAGE...) fprintf(STREAM, "%s: %s:%i: ", LEVEL, __FILE__, __LINE__); fprintf(STREAM, MESSAGE); fprintf(STREAM, "\n")
-#define Log_CRIT(MESSAGE...) Log_OUT(stderr, "CRIT", MESSAGE)
+#define Log_OUT(STREAM, LEVEL, ...) fprintf(STREAM, "%s: %s:%i: ", LEVEL, __FILE__, __LINE__); fprintf(STREAM, ## __VA_ARGS__); fprintf(STREAM, "\n")
+#define Log_CRIT(...) Log_OUT(stderr, "CRIT", ## __VA_ARGS__)
 #ifndef NDEBUG
-#define Log_ERR(MESSAGE...) Log_OUT(stderr, "ERR", MESSAGE)
-#define Log_INFO(MESSAGE...) Log_OUT(stdout, "INFO", MESSAGE)
-#define Log_WARN(MESSAGE...) Log_OUT(stdout, "WARN", MESSAGE)
-#define Log_DBG(MESSAGE...) Log_OUT(stdout, "DBG", MESSAGE)
+#define Log_ERR(...) Log_OUT(stderr, "ERR", ## __VA_ARGS__)
+#define Log_INFO(...) Log_OUT(stdout, "INFO", ## __VA_ARGS__)
+#define Log_WARN(...) Log_OUT(stdout, "WARN", ## __VA_ARGS__)
+#define Log_DBG(...) Log_OUT(stdout, "DBG", ## __VA_ARGS__)
 #else
-#define Log_ERR(MESSAGE...)
-#define Log_INFO(MESSAGE...)
-#define Log_WARN(MESSAGE...)
-#define Log_DBG(MESSAGE...)
+#define Log_ERR(...)
+#define Log_INFO(...)
+#define Log_WARN(...)
+#define Log_DBG(...)
 #endif
 
 #endif
