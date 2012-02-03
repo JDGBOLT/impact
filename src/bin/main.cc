@@ -19,7 +19,8 @@ main(int argc, const char *argv[])
    ImpactInit init;
    Impact impact;
    Timer time, renderTime;
-   init.init(&screen);
+   if (init.init(&screen) > 0)
+     return EXIT_FAILURE;
    impact.state_push((ImpactState *)(new ImpactPlay));
    while (impact.input_update() == RETURN_NORMAL)
      {
@@ -36,5 +37,5 @@ main(int argc, const char *argv[])
           SDL_Delay( (1000 / logicFRAMErate) - time.time_ticks());
      }
    init.cleanup();
-   return 0;
+   return EXIT_SUCCESS;
 }
