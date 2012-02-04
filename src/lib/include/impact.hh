@@ -26,6 +26,7 @@ const int colorkeyB = 0xFF;
 static const char* gameNAME = "Impact";
 const Uint32 screenFLAGS = SDL_HWSURFACE | SDL_HWPALETTE;
 const Uint32 colorkeyFLAGS = SDL_SRCCOLORKEY | SDL_RLEACCEL;
+static const char* dataDIR = "data/";
 
 // Sound parameters
 const int soundFREQUENCY = 44100;
