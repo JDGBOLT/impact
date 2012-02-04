@@ -12,7 +12,15 @@ PROJECT(IMPACT)
 # Version Information and other configuration settings
 SET(Impact_VERSION_MAJOR 0)
 SET(Impact_VERSION_MINOR 1)
+
+# Set impact binary to be in build root 
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+
+# Set default install prefix if there isn't one set
+if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+   SET(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_BINARY_DIR}/install" CACHE PATH
+   "Impact Install Prefix" FORCE)
+endif (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 
 # Find the prerequisite libraries
 FIND_PACKAGE(SDL REQUIRED)
