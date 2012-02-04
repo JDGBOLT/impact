@@ -12,6 +12,7 @@ PROJECT(IMPACT)
 # Version Information and other configuration settings
 SET(Impact_VERSION_MAJOR 0)
 SET(Impact_VERSION_MINOR 1)
+SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
 
 # Find the prerequisite libraries
 FIND_PACKAGE(SDL REQUIRED)
