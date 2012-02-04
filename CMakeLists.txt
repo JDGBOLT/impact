@@ -35,3 +35,4 @@ endif (NOT SDLIMAGE_FOUND)
 
 # Include subdirectories in the tree for build process
 ADD_SUBDIRECTORY(src)
+ADD_SUBDIRECTORY(data)
