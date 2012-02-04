@@ -10,11 +10,13 @@
 #ifndef _IMPACT_STATE_PLAY_HH_
 #define _IMPACT_STATE_PLAY_HH_
 
-#include "impact_state.hh"
+#include "core/impact_state.hh"
 #include "input/input_state_play.hh"
 #include "logic/logic_state_play.hh"
 #include "display/display_state_play.hh"
 #include "sound/sound_state_play.hh"
+#include "core/impact_loader.hh"
+#include "core/entity_tilemap.hh"
 
 class
 ImpactPlay : ImpactState
@@ -47,6 +49,8 @@ ImpactPlay : ImpactState
     LogicPlay logic;
     DisplayPlay display;
     SoundPlay sound;
+    ImpactLoader loader;
+    EntityTilemap tileMap;
 };
 
 #endif

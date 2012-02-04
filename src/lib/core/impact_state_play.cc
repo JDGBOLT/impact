@@ -12,6 +12,11 @@
 ErrorReturn
 ImpactPlay::init()
 {
+   Log_DBG("Config parsing start ticks: %i", SDL_GetTicks());
+   loader.config_parse("config.json");
+   loader.chapter_load(1);
+   loader.level_load(&tileMap, "1");
+   Log_DBG("Config parsing end ticks: %i", SDL_GetTicks());
    return RETURN_NORMAL;
 }
 
