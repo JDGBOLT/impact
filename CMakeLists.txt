@@ -1,5 +1,5 @@
 # @file /CMakeLists.txt
-# brief Primary CMake build system file, containing project settings and
+# @brief Primary CMake build system file, containing project settings and
 # dependencies
 # @author Joshua Gwinn (jdgbolt@gmail.com)
 # @version

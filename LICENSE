@@ -1,0 +1,10 @@
+The source code, and any of their modifications, are under the terms of the
+GPLv2+, unless otherwise specified, a copy of which is located within the
+COPYING file located within the root of the source. 
+
+The artwork and other game files are under the terms of the Creative Commons
+Attribution-ShareAlike 3.0 license, unless otherwise noted, with some of the
+terms listed within the COPYING file located within the /data directory. 
+
+Other Licensed Work Used:
+- /src/lib/libs/jansson - Licensed under the MIT license.
