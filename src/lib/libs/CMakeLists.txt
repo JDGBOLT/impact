@@ -6,8 +6,10 @@
 
 # Add library subdirectories to the build system
 ADD_SUBDIRECTORY(jansson)
+ADD_SUBDIRECTORY(lz4)
 
 # Set variable to add files to build process
 SET(LIBS_SOURCES
    ${JANSSON_SOURCES}
+   ${LZFOUR_SOURCES}
    PARENT_SCOPE)
