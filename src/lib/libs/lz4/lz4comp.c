@@ -94,7 +94,6 @@ int usage()
 	DISPLAY( "Arguments :\n");
 	DISPLAY( " -c : compression (default)\n");
 	DISPLAY( " -d : decompression \n");
-	DISPLAY( " -b : benchmark with files\n");
 	DISPLAY( " -t : check compressed file \n");
 	DISPLAY( " -h : help (this text)\n");	
 	DISPLAY( "input  : can be 'stdin' (pipe) or a filename\n");
@@ -198,10 +197,6 @@ int compress_file(char* input_filename, char* output_filename)
 	end = clock();
 	DISPLAY( "Compressed %llu bytes into %llu bytes ==> %.2f%%\n", 
 		(unsigned long long) filesize, (unsigned long long) compressedfilesize, (double)compressedfilesize/filesize*100);
-	{
-		double seconds = (double)(end - start)/CLOCKS_PER_SEC;
-		DISPLAY( "Done in %.2f s ==> %.2f MB/s\n", seconds, (double)filesize / seconds / 1024 / 1024);
-	}
 
 	// Close & Free
 	free(in_buff);
@@ -306,9 +301,6 @@ int main(int argc, char** argv)
   char nulmark[] = "/dev/null";
 #endif
   char nullinput[] = "null";
-
-  // Welcome message
-  DISPLAY( WELCOME_MESSAGE);
 
   if (argc<2) { badusage(); return 1; }
 
