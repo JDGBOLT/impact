@@ -33,6 +33,10 @@
 extern "C" {
 #endif
 
+// Defines to set the magic number used by the compressor
+#define ARCHIVE_MAGICNUMBER 0x184C2102
+#define ARCHIVE_MAGICNUMBER_SIZE 4
+#define ARCHIVE_MAGICNUMBER_OFFSET 8
 
 //****************************
 // Simple Functions
