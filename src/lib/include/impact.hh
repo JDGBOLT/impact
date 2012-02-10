@@ -41,6 +41,7 @@ const int logicFRAMErate = 120;
 const int colorkeyR = 0xFF;
 const int colorkeyG = 0;
 const int colorkeyB = 0xFF;
+const int confMAXsize = 512000;
 static const char* gameNAME = "Impact";
 const Uint32 screenFLAGS = SDL_HWSURFACE | SDL_HWPALETTE;
 const Uint32 colorkeyFLAGS = SDL_SRCCOLORKEY | SDL_RLEACCEL;
