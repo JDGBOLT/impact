@@ -33,6 +33,8 @@
 #include "jansson/jansson.h"
 #include "core/entity_tilemap.hh"
 #include <string>
+#include "lz4/lz4.h"
+#include <fstream>
 
 class
 ImpactLoader
@@ -49,6 +51,8 @@ ImpactLoader
     json_t *
        file_load(std::string fileName);
     // Variables
+    char fileString[confMAXsize]; 
+    char fileBuffer[confMAXsize / 4];
     json_t *config;
     json_t *chapters;
     json_t *tilesets;
