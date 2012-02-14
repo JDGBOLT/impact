@@ -11,10 +11,3 @@ SET(CURDIR ${CMAKE_CURRENT_SOURCE_DIR})
 SET(LZFOUR_SOURCES
    "${CURDIR}/lz4.c"
    PARENT_SCOPE)
-
-# Add executable for building of data files
-ADD_EXECUTABLE(
-   data/lz4comp
-   "${CURDIR}/lz4.c"
-   "${CURDIR}/lz4comp.c"
-)
