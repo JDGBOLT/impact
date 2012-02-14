@@ -20,30 +20,28 @@
  * @file impact_io.hh
  * @brief Header file for the ImpactIO namespace, which is a namespace
  * containing functions to handle all textual data within the game of Impact.
+ * This file contains the base functions for handling of compressing and
+ * uncompressing lz4 compressed files.
  * @author Joshua Gwinn (jdgbolt@gmail.com)
  * @version 
  * @date 2012-02-13
  */
 
-#ifndef _IMPACT_IO_HH_
-#define _IMPACT_IO_HH_
+#ifndef _IMPACT_IO_LZ4_HH_
+#define _IMPACT_IO_LZ4_HH_
 
 #include "impact.hh"
-#include "core/impact_io_lz4.hh"
 #include "lz4/lz4.h"
-#include "jansson/jansson.h"
 #include <string>
 #include <fstream>
 
 namespace
 ImpactIO
 {
-   json_t *
-      conf_load(std::string fileName);
-   ErrorReturn
-      conf_write(std::string fileName, json_t *fileData, std::string type);
-   json_t *
-      json_parse(char *fileString, std::string *fileName);
+   char *
+      lz4_file_compress(char *fileString, Uint32 *length);
+   char *
+      lz4_file_uncompress(char *fileData, Uint32 *length);
 }
 
 #endif

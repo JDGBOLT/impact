@@ -27,7 +27,7 @@
  * @date 2012-02-14
  */
 
-#include "core/impact_io.hh"
+#include "core/impact_io_lz4.hh"
 
 enum
 ACTION
