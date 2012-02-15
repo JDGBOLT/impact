@@ -29,6 +29,7 @@
 #include "core/impact_game.hh"
 #include "core/impact_state_play.hh"
 #include "core/timer.hh"
+#include "config/config_global.hh"
 
 int
 main(int argc, const char *argv[])
@@ -39,6 +40,8 @@ main(int argc, const char *argv[])
    Timer time, renderTime;
    if (init.init(&screen) > 0)
      return EXIT_FAILURE;
+   ConfigGlobal config;
+   config.global_config_load();
    impact.state_push((ImpactState *)(new ImpactPlay));
    while (impact.input_update() == RETURN_NORMAL)
      {

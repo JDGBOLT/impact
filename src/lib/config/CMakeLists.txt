@@ -7,6 +7,7 @@
 # Set variable to add files to build process
 SET(CURDIR ${CMAKE_CURRENT_SOURCE_DIR})
 SET(CONFIG_SOURCES
+   "${CURDIR}/config_global.cc"
    PARENT_SCOPE)
 
 
