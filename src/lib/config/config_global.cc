@@ -66,7 +66,6 @@ ConfigGlobal::global_config_load()
      {
         Log_ERR("Could not unpack global config file config.json:\n%s", jsonErrors.text);
         json_decref(jsonData);
-        delete[] jsonData;
         return RETURN_ERROR;
      }
    chaptersDirectory = paths[CHAPTERS_DIRECTORY];
@@ -75,7 +74,6 @@ ConfigGlobal::global_config_load()
    soundsDirectory = paths[SOUNDS_DIRECTORY];
    tilesetsDirectory = paths[TILESETS_DIRECTORY];
    json_decref(jsonData);
-   delete[] jsonData;
    return RETURN_NORMAL;
 }
 
@@ -94,17 +92,14 @@ ConfigGlobal::global_config_write()
      {
         Log_ERR("Could not pack global configuration config.json:\n%s", jsonErrors.text);
         json_decref(jsonData);
-        delete[] jsonData;
         return RETURN_ERROR;
      }
    if (ImpactIO::conf_write("config", jsonData, "json") != RETURN_NORMAL)
      {
         Log_ERR("Could not write global configuration data config.json!");
         json_decref(jsonData);
-        delete[] jsonData;
         return RETURN_ERROR;
      }
    json_decref(jsonData);
-   delete[] jsonData;
    return RETURN_NORMAL;
 }

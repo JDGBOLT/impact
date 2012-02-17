@@ -105,7 +105,7 @@ ImpactIO::conf_write(std::string fileName, json_t *fileData, std::string type)
         // Write the json text to the file, then close it
         file.write(jsonString, strlen(jsonString));
         file.close();
-        delete[] jsonString;
+        free(jsonString);
         return RETURN_NORMAL;
      }
    else if (type == "lz4")
