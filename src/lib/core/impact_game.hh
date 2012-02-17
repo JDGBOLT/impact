@@ -32,6 +32,7 @@
 
 #include "impact.hh"
 #include "core/impact_state.hh"
+#include "config/config_global.hh"
 #include <vector>
 #include <bitset>
 
@@ -66,6 +67,7 @@ Impact
        run_unpause();
     ErrorReturn
        state_check();
+    Impact();
     ~Impact();
 
  private:
@@ -73,6 +75,7 @@ Impact
        states_clear();
     std::vector<ImpactState *> states;
     std::bitset<NUM_BUTTONS> keys;
+    ConfigGlobal config;
 };
 #endif
 

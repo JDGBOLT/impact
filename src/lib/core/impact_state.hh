@@ -28,6 +28,7 @@
  */
 
 #include "impact.hh"
+#include "config/config_global.hh"
 #include <bitset>
 
 class
@@ -55,6 +56,7 @@ ImpactState
     virtual ImpactState *
        state_change() = 0;
     virtual ~ImpactState() {};
+    ConfigGlobal *config;
 };
 #endif
 

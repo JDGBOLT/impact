@@ -40,6 +40,7 @@ Impact::state_change(ImpactState *state)
              states.pop_back();
              states.push_back(state);
           }
+        states.back()->config = &config;
         states.back()->init();
      }
    else
@@ -76,6 +77,7 @@ Impact::state_push(ImpactState *state)
         states.back()->run_pause();
      }
    states.push_back(state);
+   states.back()->config = &config;
    states.back()->init();
    return RETURN_NORMAL;
 }
@@ -196,6 +198,11 @@ Impact::run_unpause()
      return states.back()->run_unpause();
    else
      return RETURN_ERROR;
+}
+
+Impact::Impact()
+{
+   config.global_config_load();
 }
 
 Impact::~Impact()
