@@ -120,7 +120,7 @@ ObjectHeading
 };
 
 // Handle debug logging
-#define Log_OUT(STREAM, LEVEL, ...) fprintf(STREAM, "%s: %s:%i: ", LEVEL, __FILE__, __LINE__); fprintf(STREAM, ## __VA_ARGS__); fprintf(STREAM, "\n")
+#define Log_OUT(STREAM, LEVEL, ...) do { fprintf(STREAM, "%s: %s:%i: ", LEVEL, __FILE__, __LINE__); fprintf(STREAM, ## __VA_ARGS__); fprintf(STREAM, "\n"); } while(0)
 #define Log_CRIT(...) Log_OUT(stderr, "CRIT", ## __VA_ARGS__)
 #ifndef NDEBUG
 #define Log_ERR(...) Log_OUT(stderr, "ERR", ## __VA_ARGS__)
