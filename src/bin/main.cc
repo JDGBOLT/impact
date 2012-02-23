@@ -28,7 +28,7 @@
 #include "core/impact_init.hh"
 #include "core/impact_game.hh"
 #include "core/impact_state_play.hh"
-#include "core/timer.hh"
+#include "util/timer.hh"
 
 int
 main(int argc, const char *argv[])

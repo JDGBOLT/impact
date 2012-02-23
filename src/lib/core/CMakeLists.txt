@@ -12,7 +12,6 @@ SET(CORE_SOURCES
    "${CURDIR}/impact_io_lz4.cc"
    "${CURDIR}/impact_game.cc"
    "${CURDIR}/impact_state_play.cc"
-   "${CURDIR}/timer.cc"
    PARENT_SCOPE)
 
 

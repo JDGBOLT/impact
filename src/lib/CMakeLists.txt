@@ -5,6 +5,7 @@
 # @date 2012-01-28
 
 # Include subdirectories in the tree for build process
+ADD_SUBDIRECTORY(util)
 ADD_SUBDIRECTORY(core)
 ADD_SUBDIRECTORY(display)
 ADD_SUBDIRECTORY(sound)
@@ -15,6 +16,7 @@ ADD_SUBDIRECTORY(config)
 
 # Set source variable to build main.cc in /src/bin
 SET(LIB_SOURCES
+   ${UTIL_SOURCES}
    ${CORE_SOURCES}
    ${DISPLAY_SOURCES}
    ${SOUND_SOURCES}
