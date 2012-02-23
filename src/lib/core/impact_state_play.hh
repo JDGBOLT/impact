@@ -33,7 +33,6 @@
 #include "logic/logic_state_play.hh"
 #include "display/display_state_play.hh"
 #include "sound/sound_state_play.hh"
-#include "core/entity_tilemap.hh"
 
 class
 ImpactPlay : ImpactState
@@ -66,7 +65,6 @@ ImpactPlay : ImpactState
     LogicPlay logic;
     DisplayPlay display;
     SoundPlay sound;
-    EntityTilemap tileMap;
 };
 
 #endif
