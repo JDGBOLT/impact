@@ -17,7 +17,7 @@ ADD_EXECUTABLE(
    impact
    WIN32
    MACOSX_BUNDLE
-   main.cc
+   impact.cc
    ${LIB_SOURCES}
 )
 
