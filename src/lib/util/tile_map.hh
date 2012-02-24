@@ -33,7 +33,7 @@
  */
 
 #include "impact.hh"
-#include "core/tile_type.hh"
+#include "util/tile_type.hh"
 #include <vector>
 
 struct
