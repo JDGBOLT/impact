@@ -31,7 +31,6 @@
 #include "lz4/lz4.h"
 #include "jansson/jansson.h"
 #include <string>
-#include <fstream>
 
 namespace
 ImpactIO

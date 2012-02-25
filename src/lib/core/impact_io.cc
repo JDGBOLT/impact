@@ -30,15 +30,16 @@ ImpactIO::conf_load(std::string fileName)
 {
    // Attempt to open json file first, if it can, it loads it and parses it
    std::string tempFileName = dataDIR + fileName + ".json";
-   std::fstream file(tempFileName.c_str(), (std::ios::in | std::ios::ate));
-   if (file.good())
+   FILE *file = fopen(tempFileName.c_str(), "r");
+   if (file)
      {
         // Read in the file
-        Uint32 fileSize = file.tellg();
+        fseek(file, 0, SEEK_END);
+        Uint32 fileSize = ftell(file);
         char *fileString = new char[fileSize + 1];
-        file.seekg(0);
-        file.read(fileString, fileSize);
-        file.close();
+        rewind(file);
+        fread(fileString, fileSize, 1, file);
+        fclose(file);
         // Append \0 to the end of the file string, to make it a character
         // array, then parse it, returning the json object
         fileString[fileSize] = '\0';
@@ -50,19 +51,19 @@ ImpactIO::conf_load(std::string fileName)
      {
         // Attempt to open .lz4 file next
         tempFileName = dataDIR + fileName + ".lz4";
-        file.open(tempFileName.c_str(), (std::ios::in | std::ios::binary | std::ios::ate));
-        if (!file.good())
+        file = fopen(tempFileName.c_str(), "rb");
+        if (!file)
           {
-             file.close();
              Log_ERR("Could not open file %s: File not found!", tempFileName.c_str());
              return NULL;
           }
-        Uint32 fileSize = file.tellg();
+        fseek(file, 0, SEEK_END);
+        Uint32 fileSize = ftell(file);
         char *fileData = new char[fileSize];
         // Read .lz4 file in, then pass it to the uncompress function
-        file.seekg(0);
-        file.read(fileData, fileSize);
-        file.close();
+        rewind(file);
+        fread(fileData, fileSize, 1, file);
+        fclose(file);
         char *fileString = lz4_file_uncompress(fileData, &fileSize);
         // Append \0 to the end of the file string, to make it a character
         // array, then parse it, returning the json object
@@ -72,22 +73,21 @@ ImpactIO::conf_load(std::string fileName)
         delete[] fileData;
         return jsonData;
      }
-   file.close();
    return NULL;
 }
 
 ErrorReturn
 ImpactIO::conf_write(std::string fileName, json_t *fileData, std::string type)
 {
-   std::fstream file;
+   FILE *file;
    std::string tempFileName;
    // Check whether we are writing a .json file, or a compressed .lz4 file
    if (type == "json")
      {
         // Attempt to open file for writing
         tempFileName = dataDIR + fileName + ".json";
-        file.open(tempFileName.c_str(), (std::ios::out | std::ios::trunc));
-        if (!file.good())
+        file = fopen(tempFileName.c_str(), "w");
+        if (!file)
           {
              Log_ERR("Could not open file %s!", tempFileName.c_str());
              return RETURN_ERROR;
@@ -101,8 +101,8 @@ ImpactIO::conf_write(std::string fileName, json_t *fileData, std::string type)
              return RETURN_ERROR;
           }
         // Write the json text to the file, then close it
-        file.write(jsonString, strlen(jsonString));
-        file.close();
+        fwrite(jsonString, strlen(jsonString), 1, file);
+        fclose(file);
         free(jsonString);
         return RETURN_NORMAL;
      }
@@ -110,8 +110,8 @@ ImpactIO::conf_write(std::string fileName, json_t *fileData, std::string type)
      {
         // Attempt to open file for writing
         tempFileName = dataDIR + fileName + ".lz4";
-        file.open(tempFileName.c_str(), (std::ios::out | std::ios::binary | std::ios::trunc));
-        if (!file.good())
+        file = fopen(tempFileName.c_str(), "wb");
+        if (!file)
           {
              Log_ERR("Could not open file %s!", fileName.c_str());
              return RETURN_ERROR;
@@ -123,7 +123,7 @@ ImpactIO::conf_write(std::string fileName, json_t *fileData, std::string type)
         if (!jsonString)
           {
              Log_ERR("Could not encode json data!");
-             file.close();
+             fclose(file);
              return RETURN_ERROR;
           }
         // Take the length of the string, and pass it along with the json text
@@ -135,12 +135,12 @@ ImpactIO::conf_write(std::string fileName, json_t *fileData, std::string type)
           {
              Log_ERR("Could not compress lz4 configuration file %s!", tempFileName.c_str());
              delete[] jsonString;
-             file.close();
+             fclose(file);
              return RETURN_ERROR;
           }
         // Write data to file, then close it and return
-        file.write(fileData, fileSize);
-        file.close();
+        fwrite(fileData, fileSize, 1, file);
+        fclose(file);
         delete[] jsonString;
         delete[] fileData;
         return RETURN_NORMAL;

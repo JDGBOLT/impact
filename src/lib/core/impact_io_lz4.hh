@@ -31,7 +31,6 @@
 #include "impact.hh"
 #include "lz4/lz4.h"
 #include <string>
-#include <fstream>
 
 namespace
 ImpactIO
