@@ -48,7 +48,8 @@ int
 main(int argc, char *argv[])
 {
    ACTION action;
-   std::fstream in, out;
+   FILE *in;
+   FILE *out;
    Uint32 fileSize;
    char *source = NULL;
    char *dest = NULL;
@@ -85,22 +86,23 @@ main(int argc, char *argv[])
         source = argv[1];
         dest = argv[2];
      }              
-   in.open(source, (std::ios::in | std::ios::binary | std::ios::ate));
-   out.open(dest, (std::ios::out | std::ios::binary | std::ios::trunc));
-   if (!in.good())
+   in = fopen(source, "rb");
+   out = fopen(dest, "wb");
+   if (!in)
      {
         printf("Could not open source file %s: File not found\n", source);
         return 1;
      }
-   if (!out.good())
+   if (!out)
      {
         printf("Could not open destination file %s.\n", dest);
         return 1;
      }
-   fileSize = in.tellg();
-   in.seekg(0);
+   fseek(in, 0, SEEK_END);
+   fileSize = ftell(in);
+   rewind(in);
    fileIn = new char[fileSize];
-   in.read(fileIn, fileSize);
+   fread(fileIn, fileSize, 1, in);
    if (!fileIn)
      {
         printf("Source file %s is empty.\n", source);
@@ -113,6 +115,8 @@ main(int argc, char *argv[])
         printf("Could not compress file.\n");
         return 1;
      }
-   out.write(fileOut, fileSize);
+   fwrite(fileOut, fileSize, 1, out);
+   fclose(in);
+   fclose(out);
    return 0;
 }
