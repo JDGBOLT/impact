@@ -60,7 +60,7 @@ main(int argc, char *argv[])
      {
         printf("Bad number of arguments:\n");
         usage_print();
-        return 1;
+        return EXIT_FAILURE;
      }
    if (argv[1][0] == '-' && argc == 4)
      {
@@ -69,12 +69,12 @@ main(int argc, char *argv[])
           {
            case 'c': action = COMPRESS; break;
            case 'd': action = DECOMPRESS; break;
-           case 'h': usage_print(); return 0;
+           case 'h': usage_print(); return EXIT_SUCCESS;
            default:
                      {
                         printf("Invalid Option: %s\n", argv[0]);
                         usage_print();
-                        return 1;
+                        return EXIT_FAILURE;
                      }
           }
         source = argv[2];
@@ -91,12 +91,12 @@ main(int argc, char *argv[])
    if (!in)
      {
         printf("Could not open source file %s: File not found\n", source);
-        return 1;
+        return EXIT_FAILURE;
      }
    if (!out)
      {
         printf("Could not open destination file %s.\n", dest);
-        return 1;
+        return EXIT_FAILURE;
      }
    fseek(in, 0, SEEK_END);
    fileSize = ftell(in);
@@ -106,17 +106,17 @@ main(int argc, char *argv[])
    if (!fileIn)
      {
         printf("Source file %s is empty.\n", source);
-        return 1;
+        return EXIT_FAILURE;
      }
    fileOut = (action == COMPRESS) ? ImpactIO::lz4_file_compress(fileIn, &fileSize) :
                                     ImpactIO::lz4_file_uncompress(fileIn, &fileSize);
    if (!fileOut)
      {
         printf("Could not compress file.\n");
-        return 1;
+        return EXIT_FAILURE;
      }
    fwrite(fileOut, fileSize, 1, out);
    fclose(in);
    fclose(out);
-   return 0;
+   return EXIT_SUCCESS;
 }
