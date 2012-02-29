@@ -23,7 +23,7 @@ ADD_EXECUTABLE(
 
 # Build the lz4comp executable
 ADD_EXECUTABLE(
-   data/lz4comp
+   lz4comp
    WIN32
    MACOSX_BUNDLE
    lz4comp.cc
@@ -31,4 +31,11 @@ ADD_EXECUTABLE(
    "${CMAKE_SOURCE_DIR}/src/lib/libs/lz4/lz4.c"
 )
 
+# Set a cache file for lz4comp for cross compiling build
+if (NOT CMAKE_CROSSCOMPILING)
+   EXPORT(TARGETS lz4comp FILE
+   "${CMAKE_BINARY_DIR}/lz4comp_crossfile.cmake" NAMESPACE native-)
+endif (NOT CMAKE_CROSSCOMPILING)
+
 INSTALL (TARGETS impact DESTINATION ${CMAKE_INSTALL_PREFIX})
+INSTALL (TARGETS lz4comp DESTINATION ${CMAKE_INSTALL_PREFIX})
