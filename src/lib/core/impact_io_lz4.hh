@@ -32,6 +32,11 @@
 #include "lz4/lz4.h"
 #include <string>
 
+// Defines for the archive format
+#define ARCHIVE_MAGICNUMBER 0x184C2102
+#define ARCHIVE_MAGICNUMBER_SIZE 4
+#define ARCHIVE_MAGICNUMBER_OFFSET 8
+
 namespace
 ImpactIO
 {

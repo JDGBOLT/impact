@@ -32,7 +32,7 @@ ImpactIO::lz4_file_compress(char *fileString, Uint32 *length)
 {
    // Prepare to compress the file, creating a character array 10% larger than
    // the length of the string passed in
-   char *tempFileData = new char[*length + (*length / 10)];
+   char *tempFileData = new char[LZ4_compressBound(*length)];
    // Compress the file, and check to ensure it compressed correctly
    int compressedLength = LZ4_compress(fileString, tempFileData, *length);
    if (compressedLength < 0)
