@@ -31,11 +31,15 @@ const char *confFormat = "{s:s,\
                            s:s,\
                            s:s,\
                            s:s,\
+                           s:s,\
+                           s:s,\
                            s:s}";
 enum 
 GlobalConfigPaths
 {
-   CHAPTERS_DIRECTORY = 0,
+   ASSETS_DIRECTORY = 0,
+   CHAPTERS_DIRECTORY,
+   GAMES_DIRECTORY,
    IMAGES_DIRECTORY,
    MUSIC_DIRECTORY,
    SOUNDS_DIRECTORY,
@@ -55,7 +59,9 @@ ConfigGlobal::global_config_load()
         return RETURN_ERROR;
      }
    if (json_unpack_ex(jsonData, &jsonErrors, JSON_STRICT, confFormat,
+                   "AssetsDirectory", &paths[ASSETS_DIRECTORY],
                    "ChaptersDirectory", &paths[CHAPTERS_DIRECTORY],
+                   "GamesDirectory", &paths[GAMES_DIRECTORY],
                    "ImagesDirectory", &paths[IMAGES_DIRECTORY],
                    "MusicDirectory", &paths[MUSIC_DIRECTORY],
                    "SoundsDirectory", &paths[SOUNDS_DIRECTORY],
@@ -66,7 +72,9 @@ ConfigGlobal::global_config_load()
         json_decref(jsonData);
         return RETURN_ERROR;
      }
+   assetsDirectory = paths[ASSETS_DIRECTORY];
    chaptersDirectory = paths[CHAPTERS_DIRECTORY];
+   gamesDirectory = paths[GAMES_DIRECTORY];
    imagesDirectory = paths[IMAGES_DIRECTORY];
    musicDirectory = paths[MUSIC_DIRECTORY];
    soundsDirectory = paths[SOUNDS_DIRECTORY];
@@ -80,7 +88,9 @@ ConfigGlobal::global_config_write()
 {
    json_error_t jsonErrors;
    json_t *jsonData = json_pack_ex(&jsonErrors, 0, confFormat,
+                                   "AssetsDirectory", assetsDirectory.c_str(),
                                    "ChaptersDirectory", chaptersDirectory.c_str(),
+                                   "GamesDirectory", gamesDirectory.c_str(),
                                    "ImagesDirectory", imagesDirectory.c_str(),
                                    "MusicDirectory", musicDirectory.c_str(),
                                    "SoundsDirectory", soundsDirectory.c_str(),

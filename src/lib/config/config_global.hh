@@ -41,7 +41,9 @@ ConfigGlobal
     ErrorReturn
        global_config_write();
     // Variables
+    std::string assetsDirectory;
     std::string chaptersDirectory;
+    std::string gamesDirectory;
     std::string imagesDirectory;
     std::string musicDirectory;
     std::string soundsDirectory;
