@@ -29,6 +29,15 @@ ADD_EXECUTABLE(
    lz4comp.cc
    "${CMAKE_SOURCE_DIR}/src/lib/core/impact_io_lz4.cc"
    "${CMAKE_SOURCE_DIR}/src/lib/libs/lz4/lz4.c"
+   "${CMAKE_SOURCE_DIR}/src/lib/libs/jansson/dump.c"
+   "${CMAKE_SOURCE_DIR}/src/lib/libs/jansson/error.c"
+   "${CMAKE_SOURCE_DIR}/src/lib/libs/jansson/hashtable.c"
+   "${CMAKE_SOURCE_DIR}/src/lib/libs/jansson/load.c"
+   "${CMAKE_SOURCE_DIR}/src/lib/libs/jansson/memory.c"
+   "${CMAKE_SOURCE_DIR}/src/lib/libs/jansson/strbuffer.c"
+   "${CMAKE_SOURCE_DIR}/src/lib/libs/jansson/strconv.c"
+   "${CMAKE_SOURCE_DIR}/src/lib/libs/jansson/utf.c"
+   "${CMAKE_SOURCE_DIR}/src/lib/libs/jansson/value.c"
 )
 
 # Set a cache file for lz4comp for cross compiling build

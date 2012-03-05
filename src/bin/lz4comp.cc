@@ -26,12 +26,15 @@
  */
 
 #include "core/impact_io_lz4.hh"
+#include "jansson/jansson.h"
 
 enum
 ACTION
 {
    COMPRESS=0,
    DECOMPRESS,
+   JSON_COMPRESS,
+   JSON_DECOMPRESS
 };
 
 void
@@ -41,6 +44,8 @@ usage_print()
    printf("Usable Options:\n");
    printf("\t-d decompress\n");
    printf("\t-c compress(default)\n");
+   printf("\t-jc compress json file\n");
+   printf("\t-jd decompress json file\n");
    printf("\t-h help(this text)\n");
 }
 
@@ -69,6 +74,15 @@ main(int argc, char *argv[])
           {
            case 'c': action = COMPRESS; break;
            case 'd': action = DECOMPRESS; break;
+           case 'j':
+                     {
+                        switch (argv[1][2])
+                          {
+                           case 'c': action = JSON_COMPRESS; break;
+                           case 'd': action = JSON_DECOMPRESS; break;
+                          }
+                        break;
+                     }
            case 'h': usage_print(); return EXIT_SUCCESS;
            default:
                      {
@@ -90,12 +104,12 @@ main(int argc, char *argv[])
    out = fopen(dest, "wb");
    if (!in)
      {
-        printf("Could not open source file %s: File not found\n", source);
+        Log_CRIT("Could not open source file %s: File not found\n", source);
         return EXIT_FAILURE;
      }
    if (!out)
      {
-        printf("Could not open destination file %s.\n", dest);
+        Log_CRIT("Could not open destination file %s.\n", dest);
         return EXIT_FAILURE;
      }
    fseek(in, 0, SEEK_END);
@@ -105,14 +119,61 @@ main(int argc, char *argv[])
    fread(fileIn, fileSize, 1, in);
    if (!fileIn)
      {
-        printf("Source file %s is empty.\n", source);
+        Log_CRIT("Source file %s is empty.\n", source);
         return EXIT_FAILURE;
      }
-   fileOut = (action == COMPRESS) ? ImpactIO::lz4_file_compress(fileIn, &fileSize) :
-                                    ImpactIO::lz4_file_uncompress(fileIn, &fileSize);
+   switch (action)
+     {
+      case COMPRESS: fileOut = ImpactIO::lz4_file_compress(fileIn, &fileSize); break;
+      case DECOMPRESS: fileOut = ImpactIO::lz4_file_compress(fileIn, &fileSize); break;
+      case JSON_COMPRESS:
+                       {
+                          json_error_t errors;
+                          json_t *fileData = json_loads(fileIn, 0, &errors);
+                          if (!fileData)
+                            {
+                               Log_CRIT("Could not parse source file %s: JSON parse error: \n%s", source, errors.text);
+                               fclose(in);
+                               fclose(out);
+                               return EXIT_FAILURE;
+                            }
+                          char *jsonOut = json_dumps(fileData, (JSON_COMPACT | JSON_SORT_KEYS));
+                          if (!jsonOut)
+                            {
+                               Log_CRIT("Could not encode json data for file %s", source);
+                               fclose(in);
+                               fclose(out);
+                               return EXIT_FAILURE;
+                            }
+                          json_decref(fileData);
+                          fileSize = strlen(jsonOut);
+                          fileOut = ImpactIO::lz4_file_compress(jsonOut, &fileSize);
+                          delete[] jsonOut;
+                          break;
+                       }
+      case JSON_DECOMPRESS:
+                       {
+                          char *jsonIn = ImpactIO::lz4_file_uncompress(fileIn, &fileSize);
+                          json_error_t errors;
+                          json_t *fileData = json_loads(jsonIn, 0, &errors);
+                          if (!fileData)
+                            {
+                               Log_CRIT("Could not parse source file %s: JSON parse error \n%s", source, errors.text);
+                               fclose(in);
+                               fclose(out);
+                               delete[] jsonIn;
+                               return EXIT_FAILURE;
+                            }
+                          json_decref(fileData);
+                          fileOut = json_dumps(fileData, (JSON_INDENT(1) | JSON_SORT_KEYS));
+                          fileSize = strlen(fileOut);
+                          delete[] jsonIn;
+                          break;
+                       }
+     }
    if (!fileOut)
      {
-        printf("Could not compress file.\n");
+        Log_CRIT("Could not compress file.\n");
         return EXIT_FAILURE;
      }
    fwrite(fileOut, fileSize, 1, out);
