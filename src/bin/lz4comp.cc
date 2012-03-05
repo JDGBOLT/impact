@@ -125,7 +125,7 @@ main(int argc, char *argv[])
    switch (action)
      {
       case COMPRESS: fileOut = ImpactIO::lz4_file_compress(fileIn, &fileSize); break;
-      case DECOMPRESS: fileOut = ImpactIO::lz4_file_compress(fileIn, &fileSize); break;
+      case DECOMPRESS: fileOut = ImpactIO::lz4_file_uncompress(fileIn, &fileSize); break;
       case JSON_COMPRESS:
                        {
                           json_error_t errors;
@@ -164,8 +164,8 @@ main(int argc, char *argv[])
                                delete[] jsonIn;
                                return EXIT_FAILURE;
                             }
-                          json_decref(fileData);
                           fileOut = json_dumps(fileData, (JSON_INDENT(1) | JSON_SORT_KEYS));
+                          json_decref(fileData);
                           fileSize = strlen(fileOut);
                           delete[] jsonIn;
                           break;
