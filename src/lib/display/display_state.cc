@@ -26,26 +26,102 @@
 #include "display_state.hh"
 #include "SDL/SDL_image.h"
 
-SDL_Surface *
-DisplayState::image_load(std::string imageFilename)
+DisplayAsset
+DisplayState::image_single_load(std::string imageFilename)
+{
+   return image_load(imageFilename, false);
+}
+
+DisplayAsset
+DisplayState::image_multiple_load(std::string imageFilename)
+{
+   return image_load(imageFilename, true);
+}
+
+DisplayAsset
+DisplayState::image_load(std::string imageFilename, bool multiple)
 {
    // Temporary image surface and optimized image surface
    SDL_Surface *loadedImage = NULL;
-   SDL_Surface *optimizedImage = NULL;
+   DisplayAsset asset;
+   asset.multiple = multiple;
 
    // Load the image
    loadedImage = IMG_Load(imageFilename.c_str());
 
-   if (!loadedImage)
+   if (loadedImage)
      {
-        optimizedImage = SDL_DisplayFormat(loadedImage);
+        asset.image[NORMAL] = SDL_DisplayFormat(loadedImage);
         SDL_FreeSurface(loadedImage);
 
-        if (!optimizedImage)
-          SDL_SetColorKey(optimizedImage, colorkeyFLAGS, 
-                          SDL_MapRGB(optimizedImage->format, colorkeyR, colorkeyG, colorkeyB) );
+        if (asset.image[NORMAL])
+          SDL_SetColorKey(asset.image[NORMAL], colorkeyFLAGS, 
+                          SDL_MapRGB(asset.image[NORMAL]->format, colorkeyR, colorkeyG, colorkeyB) );
+        else
+          {
+             Log_ERR("Could not optimize image %s!", imageFilename.c_str());
+          }
      }
-   return optimizedImage;
+   else
+     {
+        Log_ERR("Could not load image %s", imageFilename.c_str());
+     }
+   if (!multiple) return asset;
+   asset.image[MIRRORED] = SDL_CreateRGBSurface(screenFLAGS, asset.image[NORMAL]->w, 
+                                                asset.image[NORMAL]->h, 
+                                                asset.image[NORMAL]->format->BitsPerPixel,
+                                                asset.image[NORMAL]->format->Rmask, 
+                                                asset.image[NORMAL]->format->Gmask,
+                                                asset.image[NORMAL]->format->Bmask,
+                                                asset.image[NORMAL]->format->Amask);
+   asset.image[FLIPPED] = SDL_CreateRGBSurface(screenFLAGS, asset.image[NORMAL]->w, 
+                                                asset.image[NORMAL]->h, 
+                                                asset.image[NORMAL]->format->BitsPerPixel,
+                                                asset.image[NORMAL]->format->Rmask, 
+                                                asset.image[NORMAL]->format->Gmask,
+                                                asset.image[NORMAL]->format->Bmask,
+                                                asset.image[NORMAL]->format->Amask);
+   asset.image[MIRROR_FLIPPED] = SDL_CreateRGBSurface(screenFLAGS, asset.image[NORMAL]->w, 
+                                                      asset.image[NORMAL]->h, 
+                                                      asset.image[NORMAL]->format->BitsPerPixel,
+                                                      asset.image[NORMAL]->format->Rmask, 
+                                                      asset.image[NORMAL]->format->Gmask,
+                                                      asset.image[NORMAL]->format->Bmask,
+                                                      asset.image[NORMAL]->format->Amask);
+   if (SDL_MUSTLOCK(asset.image[NORMAL]))
+     SDL_LockSurface(asset.image[NORMAL]);
+   Uint32 pixel;
+   Uint32 imageWidth = asset.image[NORMAL]->w;
+   Uint32 imageHeight = asset.image[NORMAL]->h;
+   Uint32 *normalPixels = (Uint32 *) asset.image[NORMAL]->pixels;
+   Uint32 *mirroredPixels = (Uint32 *) asset.image[MIRRORED]->pixels;
+   Uint32 *flippedPixels = (Uint32 *) asset.image[FLIPPED]->pixels;
+   Uint32 *mirrorFlippedPixels = (Uint32 *) asset.image[MIRROR_FLIPPED]->pixels;
+   for (int x = 0, reversedX = imageWidth - 1; x < imageWidth; x++, reversedX--)
+     {
+        for (int y = 0, reversedY = imageHeight - 1; y < imageHeight; y++, reversedY--)
+          {
+             pixel = normalPixels[ (y * imageWidth) + x];
+             mirroredPixels[ (y * imageWidth) + reversedX] = pixel;
+             flippedPixels[ (reversedY * imageWidth) + x] = pixel;
+             mirrorFlippedPixels[ (reversedY * imageWidth) + reversedX] = pixel;
+          }
+     }
+   if (SDL_MUSTLOCK(asset.image[NORMAL]))
+     SDL_UnlockSurface(asset.image[NORMAL]);
+   if (asset.image[NORMAL]->flags & SDL_SRCCOLORKEY)
+     {
+        SDL_SetColorKey(asset.image[MIRRORED], colorkeyFLAGS, 
+                        SDL_MapRGB(asset.image[MIRRORED]->format, 
+                                   colorkeyR, colorkeyG, colorkeyB) );
+        SDL_SetColorKey(asset.image[FLIPPED], colorkeyFLAGS, 
+                        SDL_MapRGB(asset.image[FLIPPED]->format, 
+                                   colorkeyR, colorkeyG, colorkeyB) );
+        SDL_SetColorKey(asset.image[MIRROR_FLIPPED], colorkeyFLAGS, 
+                        SDL_MapRGB(asset.image[MIRROR_FLIPPED]->format, 
+                                   colorkeyR, colorkeyG, colorkeyB) );
+     }
+   return asset;
 }
 
 ErrorReturn

@@ -27,14 +27,17 @@
  */
 
 #include "impact.hh"
+#include "display/display_asset.hh"
 #include <string>
 
 class
 DisplayState
 {
  public:
-    SDL_Surface *
-       image_load(std::string imageFilename);
+    DisplayAsset
+       image_single_load(std::string imageFilename);
+    DisplayAsset
+       image_multiple_load(std::string imageFilename);
     ErrorReturn
        surface_apply(int x, int y, SDL_Surface *source, SDL_Surface *destination, SDL_Rect *clip = NULL);
     virtual ErrorReturn
@@ -45,6 +48,10 @@ DisplayState
        cleanup() = 0;
     virtual
        ~DisplayState() {};
+ protected:
+    DisplayAsset
+       image_load(std::string imageFilename, bool multiple);
+
 };
 
 #endif
