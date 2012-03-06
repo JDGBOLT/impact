@@ -111,10 +111,13 @@ ObjectStates
 };
 
 enum
-ObjectHeading
+ObjectOrientation
 {
-   LEFT=0,
-   RIGHT
+   NORMAL=0,
+   MIRRORED,
+   FLIPPED,
+   MIRROR_FLIPPED,
+   NUM_ORIENTATIONS
 };
 
 // Handle debug logging
