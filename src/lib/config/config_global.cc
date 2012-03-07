@@ -27,58 +27,22 @@
 
 #include "config_global.hh"
 
-const char *confFormat = "{s:s,\
-                           s:s,\
-                           s:s,\
-                           s:s,\
-                           s:s,\
-                           s:s,\
-                           s:s}";
-enum 
-GlobalConfigPaths
-{
-   ASSETS_DIRECTORY = 0,
-   CHAPTERS_DIRECTORY,
-   GAMES_DIRECTORY,
-   IMAGES_DIRECTORY,
-   MUSIC_DIRECTORY,
-   SOUNDS_DIRECTORY,
-   TILESETS_DIRECTORY,
-   NUM_PATHS
-};
-
 ErrorReturn
 ConfigGlobal::global_config_load()
 {
-   char *paths[NUM_PATHS];
-   json_error_t jsonErrors;
    json_t *jsonData = ImpactIO::conf_load("config");
    if (!jsonData)
      {
         Log_ERR("Could not open global configuration config.json!");
         return RETURN_ERROR;
      }
-   if (json_unpack_ex(jsonData, &jsonErrors, JSON_STRICT, confFormat,
-                   "AssetsDirectory", &paths[ASSETS_DIRECTORY],
-                   "ChaptersDirectory", &paths[CHAPTERS_DIRECTORY],
-                   "GamesDirectory", &paths[GAMES_DIRECTORY],
-                   "ImagesDirectory", &paths[IMAGES_DIRECTORY],
-                   "MusicDirectory", &paths[MUSIC_DIRECTORY],
-                   "SoundsDirectory", &paths[SOUNDS_DIRECTORY],
-                   "TilesetsDirectory", &paths[TILESETS_DIRECTORY]
-                  ) < 0)
-     {
-        Log_ERR("Could not unpack global config file config.json:\n%s", jsonErrors.text);
-        json_decref(jsonData);
-        return RETURN_ERROR;
-     }
-   assetsDirectory = paths[ASSETS_DIRECTORY];
-   chaptersDirectory = paths[CHAPTERS_DIRECTORY];
-   gamesDirectory = paths[GAMES_DIRECTORY];
-   imagesDirectory = paths[IMAGES_DIRECTORY];
-   musicDirectory = paths[MUSIC_DIRECTORY];
-   soundsDirectory = paths[SOUNDS_DIRECTORY];
-   tilesetsDirectory = paths[TILESETS_DIRECTORY];
+   assetsDirectory = json_string_value(json_object_get(jsonData, "AssetsDirectory") );
+   chaptersDirectory = json_string_value(json_object_get(jsonData, "ChaptersDirectory") );
+   gamesDirectory = json_string_value(json_object_get(jsonData, "GamesDirectory") );
+   imagesDirectory = json_string_value(json_object_get(jsonData, "ImagesDirectory") );
+   musicDirectory = json_string_value(json_object_get(jsonData, "MusicDirectory") );
+   soundsDirectory = json_string_value(json_object_get(jsonData, "SoundsDirectory") );
+   tilesetsDirectory = json_string_value(json_object_get(jsonData, "TilesetsDirectory") );
    json_decref(jsonData);
    return RETURN_NORMAL;
 }
@@ -87,7 +51,7 @@ ErrorReturn
 ConfigGlobal::global_config_write()
 {
    json_error_t jsonErrors;
-   json_t *jsonData = json_pack_ex(&jsonErrors, 0, confFormat,
+   json_t *jsonData = json_pack_ex(&jsonErrors, 0, "{s:s,s:s,s:s,s:s,s:s,s:s,s:s}",
                                    "AssetsDirectory", assetsDirectory.c_str(),
                                    "ChaptersDirectory", chaptersDirectory.c_str(),
                                    "GamesDirectory", gamesDirectory.c_str(),
@@ -99,7 +63,6 @@ ConfigGlobal::global_config_write()
    if (!jsonData)
      {
         Log_ERR("Could not pack global configuration config.json:\n%s", jsonErrors.text);
-        json_decref(jsonData);
         return RETURN_ERROR;
      }
    if (ImpactIO::conf_write("config", jsonData, "json") != RETURN_NORMAL)
