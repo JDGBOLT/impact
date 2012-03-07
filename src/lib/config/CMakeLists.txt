@@ -8,6 +8,7 @@
 SET(CURDIR ${CMAKE_CURRENT_SOURCE_DIR})
 SET(CONFIG_SOURCES
    "${CURDIR}/config_global.cc"
+   "${CURDIR}/config_base.cc"
    PARENT_SCOPE)
 
 
