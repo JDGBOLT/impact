@@ -36,13 +36,13 @@ ConfigGlobal::global_config_load()
         Log_ERR("Could not open global configuration config.json!");
         return RETURN_ERROR;
      }
-   assetsDirectory = json_string_value(json_object_get(jsonData, "AssetsDirectory") );
-   chaptersDirectory = json_string_value(json_object_get(jsonData, "ChaptersDirectory") );
-   gamesDirectory = json_string_value(json_object_get(jsonData, "GamesDirectory") );
-   imagesDirectory = json_string_value(json_object_get(jsonData, "ImagesDirectory") );
-   musicDirectory = json_string_value(json_object_get(jsonData, "MusicDirectory") );
-   soundsDirectory = json_string_value(json_object_get(jsonData, "SoundsDirectory") );
-   tilesetsDirectory = json_string_value(json_object_get(jsonData, "TilesetsDirectory") );
+   assetsDirectory = string_get(jsonData, "AssetsDirectory");
+   chaptersDirectory = string_get(jsonData, "ChaptersDirectory"); 
+   gamesDirectory = string_get(jsonData, "GamesDirectory");
+   imagesDirectory = string_get(jsonData, "ImagesDirectory");
+   musicDirectory = string_get(jsonData, "MusicDirectory");
+   soundsDirectory = string_get(jsonData, "SoundsDirectory");
+   tilesetsDirectory = string_get(jsonData, "TilesetsDirectory");
    json_decref(jsonData);
    return RETURN_NORMAL;
 }

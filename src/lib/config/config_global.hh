@@ -29,10 +29,11 @@
  */
 
 #include "impact.hh"
+#include "config/config_base.hh"
 #include "core/impact_io.hh"
 
 class
-ConfigGlobal
+ConfigGlobal : public ConfigBase
 {
  public:
     // Functions
