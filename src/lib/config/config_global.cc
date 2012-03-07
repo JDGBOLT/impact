@@ -38,6 +38,7 @@ ConfigGlobal::global_config_load()
      }
    assetsDirectory = string_get(jsonData, "AssetsDirectory");
    chaptersDirectory = string_get(jsonData, "ChaptersDirectory"); 
+   defaultGame = string_get(jsonData, "DefaultGame");
    gamesDirectory = string_get(jsonData, "GamesDirectory");
    imagesDirectory = string_get(jsonData, "ImagesDirectory");
    musicDirectory = string_get(jsonData, "MusicDirectory");
@@ -54,6 +55,7 @@ ConfigGlobal::global_config_write()
    json_t *jsonData = json_pack_ex(&jsonErrors, 0, "{s:s,s:s,s:s,s:s,s:s,s:s,s:s}",
                                    "AssetsDirectory", assetsDirectory.c_str(),
                                    "ChaptersDirectory", chaptersDirectory.c_str(),
+                                   "DefaultGame", defaultGame.c_str(),
                                    "GamesDirectory", gamesDirectory.c_str(),
                                    "ImagesDirectory", imagesDirectory.c_str(),
                                    "MusicDirectory", musicDirectory.c_str(),

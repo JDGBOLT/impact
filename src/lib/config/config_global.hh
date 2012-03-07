@@ -44,6 +44,7 @@ ConfigGlobal : public ConfigBase
     // Variables
     std::string assetsDirectory;
     std::string chaptersDirectory;
+    std::string defaultGame;
     std::string gamesDirectory;
     std::string imagesDirectory;
     std::string musicDirectory;
