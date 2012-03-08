@@ -33,6 +33,7 @@ struct
 DisplayAsset
 {
    SDL_Surface *image[NUM_ORIENTATIONS];
+   Uint32 width, height;
    bool multiple;
 };
 

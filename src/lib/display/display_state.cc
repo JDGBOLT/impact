@@ -66,6 +66,8 @@ DisplayState::image_load(std::string imageFilename, bool multiple)
      {
         Log_ERR("Could not load image %s", imageFilename.c_str());
      }
+   asset.width = asset.image[NORMAL]->w;
+   asset.height = asset.image[NORMAL]->h;
    if (!multiple) return asset;
    asset.image[MIRRORED] = SDL_CreateRGBSurface(screenFLAGS, asset.image[NORMAL]->w, 
                                                 asset.image[NORMAL]->h, 
