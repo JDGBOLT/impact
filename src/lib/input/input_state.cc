@@ -28,6 +28,10 @@
 ErrorReturn
 InputState::input_update(std::bitset<NUM_BUTTONS> *keys)
 {
+   for (int i = BUTTON_A_FIRST; i < NUM_BUTTONS; i++)
+     {
+        (*keys).reset(i);
+     }
    while (SDL_PollEvent(&event))
      {
         switch (event.type)
@@ -39,69 +43,169 @@ InputState::input_update(std::bitset<NUM_BUTTONS> *keys)
                 {
                    switch (event.key.keysym.sym)
                      {
-                      case SDLK_UP: (*keys)[BUTTON_UP] =
-                                    (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
-                                    break;
-                      case SDLK_DOWN: (*keys)[BUTTON_DOWN] =
-                                    (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
-                                    break;
-                      case SDLK_LEFT: (*keys)[BUTTON_LEFT] =
-                                    (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
-                                    break;
-                      case SDLK_RIGHT: (*keys)[BUTTON_RIGHT] =
-                                    (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
-                                    break;
+                      case SDLK_UP: 
+                           {
+                              (*keys)[BUTTON_UP] =
+                                 (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                              (*keys)[BUTTON_UP_FIRST] =
+                                 (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                              break;
+                           }
+                      case SDLK_DOWN: 
+                           {
+                              (*keys)[BUTTON_DOWN] =
+                                 (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                              (*keys)[BUTTON_DOWN_FIRST] =
+                                 (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                              break;
+                           }
+                      case SDLK_LEFT: 
+                           {
+                              (*keys)[BUTTON_LEFT] =
+                                 (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                              (*keys)[BUTTON_LEFT_FIRST] =
+                                 (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                              break;
+                           }
+                      case SDLK_RIGHT: 
+                           {
+                              (*keys)[BUTTON_RIGHT] =
+                                 (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                              (*keys)[BUTTON_RIGHT_FIRST] =
+                                 (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                              break;
+                           }
 #ifdef PANDORA
-                      case SDLK_PAGEUP: (*keys)[BUTTON_Y] =
-                                    (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
-                                    break;
-                      case SDLK_PAGEDOWN: (*keys)[BUTTON_X] =
-                                    (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
-                                    break;
-                      case SDLK_HOME: (*keys)[BUTTON_A] =
-                                    (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
-                                    break;
-                      case SDLK_END: (*keys)[BUTTON_B] =
-                                    (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
-                                    break;
-                      case SDLK_RSHIFT: (*keys)[BUTTON_L] =
-                                    (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
-                                    break;
-                      case SDLK_RCTRL: (*keys)[BUTTON_R] =
-                                    (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
-                                    break;
-                      case SDLK_LALT: (*keys)[BUTTON_START] =
-                                    (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
-                                    break;
-                      case SDLK_LCTRL: (*keys)[BUTTON_SELECT] =
-                                    (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
-                                    break;
+                      case SDLK_PAGEUP: 
+                           {
+                              (*keys)[BUTTON_Y] =
+                                 (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                              (*keys)[BUTTON_Y_FIRST] =
+                                 (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                              break;
+                           }
+                      case SDLK_PAGEDOWN: 
+                           {
+                              (*keys)[BUTTON_X] =
+                                 (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                              (*keys)[BUTTON_X_FIRST] =
+                                 (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                              break;
+                           }
+                      case SDLK_HOME: 
+                           {
+                              (*keys)[BUTTON_A] =
+                                 (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                              (*keys)[BUTTON_A_FIRST] =
+                                 (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                              break;
+                           }
+                      case SDLK_END: 
+                           {
+                              (*keys)[BUTTON_B] =
+                                 (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                              (*keys)[BUTTON_B_FIRST] =
+                                 (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                              break;
+                           }
+                      case SDLK_RSHIFT: 
+                           {
+                              (*keys)[BUTTON_L] =
+                                 (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                              (*keys)[BUTTON_L_FIRST] =
+                                 (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                              break;
+                           }
+                      case SDLK_RCTRL: 
+                           {
+                              (*keys)[BUTTON_R] =
+                                 (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                              (*keys)[BUTTON_R_FIRST] =
+                                 (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                              break;
+                           }
+                      case SDLK_LALT: 
+                           {
+                              (*keys)[BUTTON_START] =
+                                 (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                              (*keys)[BUTTON_START_FIRST] =
+                                 (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                              break;
+                           }
+                      case SDLK_LCTRL: 
+                           {
+                              (*keys)[BUTTON_SELECT] =
+                                 (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                              (*keys)[BUTTON_SELECT_FIRST] =
+                                 (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                              break;
+                           }
                       default: break;
 #else
-                      case SDLK_w: (*keys)[BUTTON_Y] =
-                                    (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
-                                    break;
-                      case SDLK_s: (*keys)[BUTTON_X] =
-                                    (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
-                                    break;
-                      case SDLK_a: (*keys)[BUTTON_A] =
-                                    (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
-                                    break;
-                      case SDLK_d: (*keys)[BUTTON_B] =
-                                    (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
-                                    break;
-                      case SDLK_q: (*keys)[BUTTON_L] =
-                                    (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
-                                    break;
-                      case SDLK_e: (*keys)[BUTTON_R] =
-                                    (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
-                                    break;
-                      case SDLK_f: (*keys)[BUTTON_START] =
-                                    (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
-                                    break;
-                      case SDLK_g: (*keys)[BUTTON_SELECT] =
-                                    (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
-                                    break;
+                      case SDLK_w: 
+                               {
+                                  (*keys)[BUTTON_Y] =
+                                     (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                                  (*keys)[BUTTON_Y_FIRST] =
+                                     (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                                  break;
+                               }
+                      case SDLK_s: 
+                               {
+                                  (*keys)[BUTTON_X] =
+                                     (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                                  (*keys)[BUTTON_X_FIRST] =
+                                     (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                                  break;
+                               }
+                      case SDLK_a: 
+                               {
+                                  (*keys)[BUTTON_A] =
+                                     (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                                  (*keys)[BUTTON_A_FIRST] =
+                                     (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                                  break;
+                               }
+                      case SDLK_d: 
+                               {
+                                  (*keys)[BUTTON_B] =
+                                     (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                                  (*keys)[BUTTON_B_FIRST] =
+                                     (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                                  break;
+                               }
+                      case SDLK_q: 
+                               {
+                                  (*keys)[BUTTON_L] =
+                                     (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                                  (*keys)[BUTTON_L_FIRST] =
+                                     (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                                  break;
+                               }
+                      case SDLK_e: 
+                               {
+                                  (*keys)[BUTTON_R] =
+                                     (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                                  (*keys)[BUTTON_R_FIRST] =
+                                     (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                                  break;
+                               }
+                      case SDLK_f: 
+                               {
+                                  (*keys)[BUTTON_START] =
+                                     (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                                  (*keys)[BUTTON_START_FIRST] =
+                                     (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                                  break;
+                               }
+                      case SDLK_g: 
+                               {
+                                  (*keys)[BUTTON_SELECT] =
+                                     (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                                  (*keys)[BUTTON_SELECT_FIRST] =
+                                     (event.type == SDL_KEYDOWN) ? PRESSED : UNPRESSED;
+                                  break;
+                               }
                       default: break;
 #endif
                      }
