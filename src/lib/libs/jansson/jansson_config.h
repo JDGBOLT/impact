@@ -23,8 +23,10 @@
    supported. */
 #ifdef __cplusplus
 #define JSON_INLINE inline
-#else
+#elif __STDC_VERSION__ >= 199901L
 #define JSON_INLINE inline
+#else
+#define JSON_INLINE
 #endif
 
 /* If your compiler supports the `long long` type,
