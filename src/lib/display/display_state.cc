@@ -24,7 +24,7 @@
  */
 
 #include "display_state.hh"
-#include "SDL/SDL_image.h"
+#include "SDL_image.h"
 
 DisplayAsset
 DisplayState::image_single_load(std::string imageFilename)

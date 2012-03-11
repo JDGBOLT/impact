@@ -23,7 +23,7 @@
  * @date 2012-01-29
  */
 
-#include "SDL/SDL.h"
+#include "SDL.h"
 #include "timer.hh"
 
 void

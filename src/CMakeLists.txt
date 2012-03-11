@@ -9,6 +9,9 @@ SET(LIB_SOURCES)
 
 # Set include directories
 INCLUDE_DIRECTORIES(
+   "${SDL_INCLUDE_DIR}"
+   "${SDLIMAGE_INCLUDE_DIR}"
+   "${SDLMIXER_INCLUDE_DIR}"
    "${CMAKE_CURRENT_SOURCE_DIR}/lib"
    "${CMAKE_CURRENT_SOURCE_DIR}/lib/libs"
    "${CMAKE_CURRENT_SOURCE_DIR}/lib/include"
