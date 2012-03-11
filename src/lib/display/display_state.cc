@@ -99,9 +99,9 @@ DisplayState::image_load(std::string imageFilename, bool multiple)
    Uint32 *mirroredPixels = (Uint32 *) asset.image[MIRRORED]->pixels;
    Uint32 *flippedPixels = (Uint32 *) asset.image[FLIPPED]->pixels;
    Uint32 *mirrorFlippedPixels = (Uint32 *) asset.image[MIRROR_FLIPPED]->pixels;
-   for (int x = 0, reversedX = imageWidth - 1; x < imageWidth; x++, reversedX--)
+   for (Uint32 x = 0, reversedX = imageWidth - 1; x < imageWidth; x++, reversedX--)
      {
-        for (int y = 0, reversedY = imageHeight - 1; y < imageHeight; y++, reversedY--)
+        for (Uint32 y = 0, reversedY = imageHeight - 1; y < imageHeight; y++, reversedY--)
           {
              pixel = normalPixels[ (y * imageWidth) + x];
              mirroredPixels[ (y * imageWidth) + reversedX] = pixel;
