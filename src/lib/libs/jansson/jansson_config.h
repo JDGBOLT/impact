@@ -27,6 +27,10 @@
 #define JSON_INLINE inline
 #else
 #define JSON_INLINE
+   #ifdef _MSC_VER
+      #define snprintf _snprintf
+      #define strtoll _strtoi64
+   #endif
 #endif
 
 /* If your compiler supports the `long long` type,
