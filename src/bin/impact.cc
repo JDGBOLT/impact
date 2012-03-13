@@ -23,13 +23,14 @@
  */
 
 #include "impact.hh"
+#include "SDL_main.h"
 #include "core/impact_init.hh"
 #include "core/impact_game.hh"
 #include "core/impact_state_play.hh"
 #include "util/timer.hh"
 
 int
-main(int argc, const char *argv[])
+main(int argc, char **argv)
 {
    SDL_Surface *screen = NULL;
    ImpactInit init;

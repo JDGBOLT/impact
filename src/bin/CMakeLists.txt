@@ -9,7 +9,6 @@ LINK_LIBRARIES(
    ${SDL_LIBRARY}
    ${SDLIMAGE_LIBRARY}
    ${SDLMIXER_LIBRARY}
-   SDLmain
 )
 
 # Build the impact executable

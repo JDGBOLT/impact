@@ -27,6 +27,7 @@
 
 #include "core/impact_io_lz4.hh"
 #include "jansson/jansson.h"
+#include "SDL_main.h"
 
 enum
 ACTION
