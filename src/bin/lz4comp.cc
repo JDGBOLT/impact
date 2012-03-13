@@ -116,7 +116,7 @@ main(int argc, char *argv[])
    fseek(in, 0, SEEK_END);
    fileSize = ftell(in);
    rewind(in);
-   fileIn = new char[fileSize];
+   fileIn = (action == JSON_COMPRESS) ? new char[fileSize + 1] : new char[fileSize];
    fread(fileIn, fileSize, 1, in);
    if (!fileIn)
      {
@@ -129,6 +129,7 @@ main(int argc, char *argv[])
       case DECOMPRESS: fileOut = ImpactIO::lz4_file_uncompress(fileIn, &fileSize); break;
       case JSON_COMPRESS:
                        {
+                          fileIn[fileSize] = '\0';
                           json_error_t errors;
                           json_t *fileData = json_loads(fileIn, 0, &errors);
                           if (!fileData)
@@ -156,6 +157,7 @@ main(int argc, char *argv[])
                        {
                           char *jsonIn = ImpactIO::lz4_file_uncompress(fileIn, &fileSize);
                           json_error_t errors;
+                          jsonIn[fileSize] = '\0';
                           json_t *fileData = json_loads(jsonIn, 0, &errors);
                           if (!fileData)
                             {
