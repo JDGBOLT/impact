@@ -23,6 +23,13 @@ if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
    "Impact Install Prefix" FORCE)
 endif (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 
+# Set a variable that can be set that will point to the location of SDL
+# libraries
+SET(SDL_DIRECTORY "" CACHE PATH "Location of SDL libraries, if needed")
+if (SDL_DIRECTORY)
+   SET(ENV{SDLDIR} "${SDL_DIRECTORY}")
+endif (SDL_DIRECTORY)
+
 # Find the prerequisite libraries
 FIND_PACKAGE(SDL REQUIRED)
 FIND_PACKAGE(SDL_image REQUIRED)
